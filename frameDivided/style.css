@@ -1,0 +1,142 @@
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+
+.frame {
+    background-color: var(--frame);
+    padding: 2em;
+    position: relative;
+    outline: 2px solid black;
+    outline-offset: -2px;
+    width: 100px;
+    height: fit-content;
+    text-align: center;
+}
+
+.frame::after {
+    border: 2px solid black;
+    content: "";
+    position: absolute;
+    background: none;
+    left:0;
+    top:0;
+    height: calc(100% + 7px);
+    width: calc(100% + 7px);
+    z-index: -1;
+}
+
+.frame::before {
+    border: 2px solid black;
+    content: "";
+    position: absolute;
+    background: none;
+    right:0;
+    bottom:0;
+    height: calc(100% + 7px);
+    width: calc(100% + 7px);
+    z-index: -1;
+}
+
+
+
+.btnFrame {
+    color: black;
+    font-size: 1em;
+    font-family: 'Raleway', sans-serif;
+    padding: 1em 3em;
+    border: none;
+    background-color: transparent;
+    position: relative;
+}
+
+.btnFrame::after, .btnFrame::before {
+    border: 2px solid black;
+    content: "";
+    position: absolute;
+    width: calc(100% - 6px);
+    height: calc(100% - 6px);
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: transform 0.3s ease;
+}
+
+.btnFrame:hover {
+    cursor: pointer;
+}
+
+.btnFrame:hover::after {
+    transform: translate(-5px, -5px);
+}
+
+.btnFrame:hover::before {
+    transform: translate(5px, 5px);
+}
+
+
+
+.popup {
+    width: 0px;
+    height: 0px;
+}
+
+.popup-active {
+    top: 50%;
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--frame);
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width: 300px;
+    height: 150px;
+    transition-property: width, height;
+    transition-duration: 0.25s, 0.5s;
+    transition-delay:0s, 0.2s;
+    transition-timing-function: ease-out, ease-in-out;
+}
+
+.popup-active::after {
+    border: 2px solid black;
+    content: "";
+    position: absolute;
+    background: transparent;
+    left:0;
+    top:0;
+    height: calc(100% + 7px);
+    width: calc(100% + 7px);
+    z-index: -1;
+}
+
+.popup-active::before {
+    border: 2px solid black;
+    content: "";
+    position: absolute;
+    background: transparent;
+    right:0;
+    bottom:0;
+    height: calc(100% + 7px);
+    width: calc(100% + 7px);
+    z-index: -1;
+}
+
+.centered_elem {
+    position: absolute;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.addOverlayElementBefore {
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+}
+
+.addOverlayElementAfter {
+    opacity: 1;
+    transition-property: opacity;
+    transition-delay: 0.75s;
+    transition-duration: 0.5s;
+}
