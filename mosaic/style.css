@@ -11,7 +11,7 @@ body {
     top: 0;
     left: 0;
     border-radius: 50%;
-    background-color: #00000022;
+    background-color: #00000020;
     transform: translate(-50%, -50%);
 }
 
@@ -23,7 +23,7 @@ body {
     border-radius: 50%;
     width: 100px;
     height: 100px;
-    background-color: #00000022;
+    background-color: #00000010;
     transform: translate(-50%, -50%);
 }
 
@@ -40,8 +40,12 @@ body {
     height: 4px;
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 0;
-    left: 0;
+}
+
+.chunk {
+    border: 1px solid red;
+    transform: translate(-1px, -1px);
+    position: absolute;
 }
 
 .falsePebble {
