@@ -4,11 +4,16 @@ const height = 500
 const width = 500
 const div = 25
 
-const randomOffset = 20
+const randomOffset = 25
 
 const colorList = ["#BAA963", "#B78C58", "#AF9B53", "#997C35"]
 
-
+const hoverCircle = document.getElementById("hoverCircle")
+const hoverRadius = 100
+const minRadiusThreshold = 50
+const defaultScale = 0.85
+const thresholdScale = 1
+const maxScale = 1.2
 
 // create points
 let pointList = []
@@ -33,12 +38,13 @@ for (let i = 0; i <pointList.length; i++) {
         newPoint.className = "point"
         newPoint.style.left = pointList[i][j][0] + "px"
         newPoint.style.top = pointList[i][j][1] + "px"
+        newPoint.style.zIndex = 10
         container1.appendChild(newPoint)
     }
 }
 
 
-// create pebble
+// display pebble
 let pebbleList = []
 for (let i = 0; i < pointList.length-1; i++) {
     for (let j = 0; j<pointList[0].length-1; j++) {
@@ -52,6 +58,35 @@ for (let i = 0; i < pointList.length-1; i++) {
         container2.appendChild(newPebble2)
     }
 }
+
+
+// hovering 
+hoverCircle.style.width = hoverRadius*2 + "px"
+hoverCircle.style.height = hoverRadius*2 + "px"
+
+document.addEventListener("mousemove", (event) => {
+    const boundingRectX = container2.getBoundingClientRect().x
+    const boundingRectY = container2.getBoundingClientRect().y
+
+    hoverCircle.style.left = event.clientX + "px"
+    hoverCircle.style.top = event.clientY + "px"
+
+    for (let pebble of pebbleList) {
+        const distance = this.distance(pebble.center[0],pebble.center[1],event.clientX - boundingRectX, event.clientY - boundingRectY)
+        if (distance < hoverRadius) {
+            pebble.object.style.transition = "transform 0.15s ease"
+            if (distance < minRadiusThreshold) {
+                pebble.object.style.transform = "scale("+maxScale+")"
+            } else {
+                const newScale = thresholdScale + (thresholdScale-defaultScale)/(minRadiusThreshold-hoverRadius)*(distance-minRadiusThreshold)
+                pebble.object.style.transform = "scale("+newScale+")"
+            }
+        } else {
+            pebble.object.style.transition = "transform 2s ease"
+            pebble.object.style.transform = "scale("+defaultScale+")"
+        }
+    }
+});
 
 
 function createPolygon2(x1, y1, x2, y2, x3, y3, x4, y4) {
@@ -74,9 +109,15 @@ function createPolygon2(x1, y1, x2, y2, x3, y3, x4, y4) {
          + (x4-minX) + "px " + (y4-minY) + "px, " + (x3-minX) + "px " + (y3-minY) + "px)"
 
     newPebble.style.backgroundColor = colorList[Math.floor(Math.random()*colorList.length)]
+
+
+    pebbleList.push({
+        center: [minX + pebbleWidth/2, minY + pebbleHeight/2],
+        object: newPebble
+    })
+
     return newPebble
 }
-
 
 
 function createPolygon(x1, y1, x2, y2, x3, y3, x4, y4) {
@@ -86,4 +127,9 @@ function createPolygon(x1, y1, x2, y2, x3, y3, x4, y4) {
          + x4 + "px " + y4 + "px, " + x3 + "px " + y3 + "px)"
     newPebble.style.backgroundColor = colorList[Math.floor(Math.random()*colorList.length)]
     return newPebble
+}
+
+
+function distance(x1, y1, x2, y2) {
+    return (Math.sqrt((x2-x1)*(x2-x1) + (y2-y1)*(y2-y1)))
 }
