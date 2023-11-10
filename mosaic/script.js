@@ -118,17 +118,28 @@ document.addEventListener("mousemove", (event) => {
                 pebble.object.style.transition = "transform 0.15s ease"
                 if (distance < minRadiusThreshold) {
                     pebble.object.style.transform = "scale("+maxScale+")"
+
+                    setTimeout(function() {
+                        pebble.object.style.transition = "transform 2s ease"
+                        pebble.object.style.transform = "scale("+defaultScale+")"
+                    }, 100);
                 } else {
                     const newScale = thresholdScale + (thresholdScale-defaultScale)/(minRadiusThreshold-hoverRadius)*(distance-minRadiusThreshold)
                     pebble.object.style.transform = "scale("+newScale+")"
+
+                    setTimeout(function() {
+                        pebble.object.style.transition = "transform 2s ease"
+                        pebble.object.style.transform = "scale("+defaultScale+")"
+                    }, 100);
                 }
             } else {
-                pebble.object.style.transition = "transform 2s ease"
-                pebble.object.style.transform = "scale("+defaultScale+")"
+                /*pebble.object.style.transition = "transform 2s ease"
+                pebble.object.style.transform = "scale("+defaultScale+")"*/
             }
         }
     }
 
+    /*
     for (let i=0; i<chunkXNum; i++) {
         for (let j=0; j<chunkYNum; j++) {
             if (i != chunkX && j != chunkY) {
@@ -138,7 +149,7 @@ document.addEventListener("mousemove", (event) => {
                 }
             }
         }
-    }
+    }*/
     
 });
 
